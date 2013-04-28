@@ -8,5 +8,5 @@ Setup shell packs.
 in your .emacs-live.el, add this:
 
 ```el
-(live-add-packs '(shell-pack))
+(live-add-packs '("/path/to/shell-pack"))
 ```
