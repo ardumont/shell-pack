@@ -2,6 +2,7 @@
                  multi-term))
 
 (require 'term)
+(require 'shell)
 
 (add-hook 'term-mode-hook (function () (define-key term-mode-map (kbd "C-c C-j") 'term-line-mode)))
 
