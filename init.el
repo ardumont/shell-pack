@@ -1,6 +1,10 @@
 (install-packs '(;; multi-term
                  multi-term))
 
+(require 'term)
+
+(add-hook 'term-mode-hook (function () (define-key term-mode-map (kbd "C-c C-j") 'term-line-mode)))
+
 ;; With this snippet, another press of C-d will kill the buffer.
 (defun comint-delchar-or-eof-or-kill-buffer (arg)
   (interactive "p")
