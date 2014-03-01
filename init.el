@@ -1,3 +1,9 @@
+;;; shell-pack.el --- shell configuration
+
+;;; Commentary:
+
+;;; Code:
+
 (install-packs '(;; multi-term
                  multi-term))
 
@@ -44,3 +50,5 @@ If it doesn't exist, launch it. Then go to this buffer in another buffer."
           (lambda ()
             (define-key shell-mode-map
               (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+
+;;; shell-pack.el ends here
