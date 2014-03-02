@@ -45,14 +45,21 @@ If it doesn't exist, launch it. Then go to this buffer in another buffer."
   (unless (exists-session-or-spawn-it "*terminal<1>*" 'multi-term)
     (switch-to-buffer-or-nothing "*terminal<1>*" "*terminal<1>*")))
 
+(defun shell-pack/--smartscan-off ()
+  "Deactivate smartscan to be able to parse history"
+  (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1)))
 
-(add-hook 'term-mode-hook (lambda ()
-                            (define-key term-mode-map (kbd "C-c C-j") 'term-line-mode)
-                            (define-key term-mode-map (kbd "C-c C-z") 'multi-term-once)))
+(add-hook 'term-mode-hook
+          (lambda ()
+            (define-key term-mode-map (kbd "C-c C-j") 'term-line-mode)
+            (define-key term-mode-map (kbd "C-c C-z") 'multi-term-once)
+            (shell-pack/--smartscan-off)))
 
 (add-hook 'shell-mode-hook
           (lambda ()
             (define-key shell-mode-map
-              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)
+            (shell-pack/--smartscan-off)))
+
 
 ;;; shell-pack.el ends here
