@@ -5,10 +5,15 @@
 ;;; Code:
 
 (install-packs '(;; multi-term
-                 multi-term))
+                 multi-term
+                 exec-path-from-shell))
 
 (require 'term)
 (require 'shell)
+
+;; setup the path
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
 
 ;; With this snippet, another press of C-d will kill the buffer.
 (defun comint-delchar-or-eof-or-kill-buffer (arg)
