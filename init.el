@@ -4,8 +4,7 @@
 
 ;;; Code:
 
-(install-packs '(;; multi-term
-                 multi-term
+(install-packs '(multi-term
                  exec-path-from-shell))
 
 (require 'term)
