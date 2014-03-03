@@ -5,7 +5,12 @@
 ;;; Code:
 
 (install-packs '(multi-term
-                 exec-path-from-shell))
+                 exec-path-from-shell
+                 smartscan-mode))
+
+(require 'smartscan-mode)
+(add-to-list 'auto-mode-alist '("\.sh$" . smartscan-mode))
+(add-to-list 'auto-mode-alist '("\.zsh$" . smartscan-mode))
 
 (require 'term)
 (require 'shell)
