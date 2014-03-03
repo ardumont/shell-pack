@@ -6,9 +6,9 @@
 
 (install-packs '(multi-term
                  exec-path-from-shell
-                 smartscan-mode))
+                 smartscan))
 
-(require 'smartscan-mode)
+(require 'smartscan)
 (add-to-list 'auto-mode-alist '("\.sh$" . smartscan-mode))
 (add-to-list 'auto-mode-alist '("\.zsh$" . smartscan-mode))
 
@@ -29,8 +29,7 @@
 (defun shell-pack/--smartscan-off ()
   "Deactivate smartscan to be able to parse history"
   (local-set-key (kbd "C-c C-j") 'term-line-mode)
-  (local-set-key (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)
-  (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1)))
+  (local-set-key (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer))
 
 (add-hook 'term-mode-hook 'shell-pack/--smartscan-off)
 (add-hook 'shell-mode-hook 'shell-pack/--smartscan-off)
