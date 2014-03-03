@@ -9,9 +9,6 @@
                  smartscan))
 
 (require 'smartscan)
-(add-to-list 'auto-mode-alist '("\.sh$" . smartscan-mode))
-(add-to-list 'auto-mode-alist '("\.zsh$" . smartscan-mode))
-
 (require 'term)
 (require 'shell)
 
@@ -26,13 +23,13 @@
       (kill-buffer)
     (comint-delchar-or-maybe-eof arg)))
 
-(defun shell-pack/--smartscan-off ()
+(defun shell-pack/hook-fn ()
   "Deactivate smartscan to be able to parse history"
   (local-set-key (kbd "C-c C-j") 'term-line-mode)
-  (local-set-key (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer))
+  (local-set-key (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)
+  (smartscan-mode))
 
-(add-hook 'term-mode-hook 'shell-pack/--smartscan-off)
-(add-hook 'shell-mode-hook 'shell-pack/--smartscan-off)
-(add-hook 'eshell-mode-hook 'shell-pack/--smartscan-off)
+(dolist (hook '(sh-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook))
+  (add-hook hook 'shell-pack/hook-fn))
 
 ;;; shell-pack.el ends here
