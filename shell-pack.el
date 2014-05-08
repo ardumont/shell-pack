@@ -4,6 +4,7 @@
 
 ;;; Code:
 
+(require 'install-packages-pack)
 (install-packs '(multi-term
                  exec-path-from-shell
                  smartscan))
@@ -38,4 +39,5 @@
 (dolist (hook '(term-mode-hook shell-mode-hook eshell-mode-hook ))
   (add-hook hook 'shell-pack/close-buffer-hook-fn))
 
+(provide 'shell-pack)
 ;;; shell-pack.el ends here
