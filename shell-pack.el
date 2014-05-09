@@ -15,6 +15,13 @@
 
 ;; setup the path
 (require 'exec-path-from-shell)
+
+;; Add some env variables so that emacs is aware too
+(eval-after-load 'exec-path-from-shell
+  (lambda ()
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE"))
+      (add-to-list 'exec-path-from-shell-variables var))))
+
 (exec-path-from-shell-initialize)
 
 ;; With this snippet, another press of C-d will kill the term buffer.
