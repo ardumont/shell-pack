@@ -19,7 +19,7 @@
 ;; Add some env variables so that emacs is aware too
 (eval-after-load 'exec-path-from-shell
   (lambda ()
-    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "LD_LIBRARY_PATH"))
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "LD_LIBRARY_PATH" "http_proxy" "https_proxy" "ftp_proxy" "rsync_proxy" "no_proxy"))
       (add-to-list 'exec-path-from-shell-variables var))))
 
 (exec-path-from-shell-initialize)
