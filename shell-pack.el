@@ -5,9 +5,9 @@
 ;;; Code:
 
 (require 'install-packages-pack)
-(install-packs '(multi-term
-                 exec-path-from-shell
-                 smartscan))
+(install-packages-pack/install-packs '(multi-term
+                                       exec-path-from-shell
+                                       smartscan))
 
 (require 'smartscan)
 (require 'term)
