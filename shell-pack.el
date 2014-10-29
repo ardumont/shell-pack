@@ -33,10 +33,9 @@
 
 (defun shell-pack/mode-and-simple-bindings-fn ()
   "Simple binding definition and add smartscan mode."
-  (local-set-key (kbd "C-c C-j") 'term-line-mode)
-  (smartscan-mode))
+  (local-set-key (kbd "C-c C-j") 'term-line-mode))
 
-(dolist (hook '(sh-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook ))
+(dolist (hook '(sh-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook))
   (add-hook hook 'shell-pack/mode-and-simple-bindings-fn))
 
 (defun shell-pack/close-buffer-hook-fn ()
