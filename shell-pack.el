@@ -29,7 +29,12 @@
                    "http_proxy" "https_proxy" "ftp_proxy" "rsync_proxy" "no_proxy"))
       (add-to-list 'exec-path-from-shell-variables var))))
 
-(exec-path-from-shell-initialize)
+(defun shell-pack/load-environment-within-emacs ()
+  "Reload the environment variables from the shell env."
+  (interactive)
+  (exec-path-from-shell-initialize))
+
+;; Extend shell-mode with some bindings
 
 (defun comint-delchar-or-eof-or-kill-buffer (arg)
   "Delete ARG char or kill buffer if we hit the end of the file."
@@ -51,6 +56,33 @@
 
 (dolist (hook '(term-mode-hook shell-mode-hook eshell-mode-hook))
   (add-hook hook 'shell-pack/close-buffer-hook-fn))
+
+;; Create a global shell pack mode
+
+(defvar shell-pack-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c s l") 'shell-pack/load-environment-within-emacs)
+    map)
+  "Keymap for Shell-pack mode.")
+
+(define-minor-mode shell-pack-mode
+  "Minor mode to consolidate Emacs' shell extensions.
+
+\\{shell-pack-mode-map}"
+  :lighter " SP"
+  :keymap shell-pack-mode-map)
+
+(define-globalized-minor-mode global-shell-pack-mode shell-pack-mode shell-pack-on)
+
+(defun shell-pack-on ()
+  "Turn on `shell-pack-mode'."
+  (shell-pack-mode +1))
+
+(global-shell-pack-mode)
+
+(global-prettify-symbols-mode 1)
+
+(shell-pack/load-environment-within-emacs)
 
 (provide 'shell-pack)
 ;;; shell-pack.el ends here
