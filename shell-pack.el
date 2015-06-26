@@ -47,8 +47,6 @@
   "Simple binding definition and add smartscan mode."
   (local-set-key (kbd "C-c C-j") 'term-line-mode))
 
-(dolist (hook '(sh-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook))
-  (add-hook hook 'shell-pack/mode-and-simple-bindings-fn))
 
 (defun shell-pack/close-buffer-hook-fn ()
   "Hook function to kill the buffer given a specific binding."
@@ -60,6 +58,10 @@
                                                 (interactive)
                                                 (term-send-raw-string (current-kill 0)))))
 
+
+
+(dolist (hook '(sh-mode-hook term-mode-hook shell-mode-hook eshell-mode-hook))
+  (add-hook hook 'shell-pack/mode-and-simple-bindings-fn))
 
 (dolist (hook '(term-mode-hook shell-mode-hook eshell-mode-hook))
   (add-hook hook 'shell-pack/close-buffer-hook-fn))
