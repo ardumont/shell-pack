@@ -54,8 +54,17 @@
   "Hook function to kill the buffer given a specific binding."
   (local-set-key (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer))
 
+(defun ash-term-hooks ()
+  "A hook to permit to yank in `'ansi-term`'."
+  (define-key term-raw-escape-map (kbd "C-y") (lambda ()
+                                                (interactive)
+                                                (term-send-raw-string (current-kill 0)))))
+
+
 (dolist (hook '(term-mode-hook shell-mode-hook eshell-mode-hook))
   (add-hook hook 'shell-pack/close-buffer-hook-fn))
+
+(add-hook 'term-mode-hook 'ash-term-hooks)
 
 ;; Create a global shell pack mode
 
