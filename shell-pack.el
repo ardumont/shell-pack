@@ -88,6 +88,7 @@
 (defvar shell-pack-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c s l") 'shell-pack/load-environment-within-emacs)
+    (define-key map (kbd "C-c s d") 'shell-pack/show-env)
     map)
   "Keymap for Shell-pack mode.")
 
