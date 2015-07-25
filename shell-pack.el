@@ -4,30 +4,45 @@
 
 ;;; Code:
 
-(require 'install-packages-pack)
-(install-packages-pack/install-packs '(multi-term
-                                       exec-path-from-shell
-                                       smartscan))
+(use-package smartscan)
+(use-package exec-path-from-shell)
+(use-package term)
+(use-package shell)
+(use-package popwin)
 
-(require 'smartscan)
-(require 'term)
-(require 'shell)
+(defun shell-pack/log (&rest args)
+  "Log the message ARGS in the mini-buffer."
+  (apply #'message (format "Shell Pack - %s" (car args)) (cdr args)))
+
+(defvar shell-pack--variables-to-forward-to-emacs
+  '(;; ssh/gpg agent
+    "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "GPG_TTY"
+    ;; lang
+    "LANG" "LC_CTYPE"
+    ;; library
+    "LD_LIBRARY_PATH"
+    ;; proxy
+    "http_proxy" "https_proxy" "ftp_proxy" "rsync_proxy" "no_proxy")
+  "The variables that are worth maintaining alive in Emacs session.")
 
 ;; setup the path
-(require 'exec-path-from-shell)
+(use-package exec-path-from-shell
+  :config
+  (dolist (var shell-pack--variables-to-forward-to-emacs)
+    (add-to-list 'exec-path-from-shell-variables var)))
 
-;; Add some env variables so that emacs is aware too
-(eval-after-load 'exec-path-from-shell
-  (lambda ()
-    (dolist (var '(;; ssh/gpg agent
-                   "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "GPG_TTY"
-                   ;; lang
-                   "LANG" "LC_CTYPE"
-                   ;; library
-                   "LD_LIBRARY_PATH"
-                   ;; proxy
-                   "http_proxy" "https_proxy" "ftp_proxy" "rsync_proxy" "no_proxy"))
-      (add-to-list 'exec-path-from-shell-variables var))))
+(defun shell-pack/show-env ()
+  "Display the current environment variables."
+  (interactive)
+  (-when-let (msg (with-temp-buffer
+                    (->> shell-pack--variables-to-forward-to-emacs
+                         (--map (format "%s: %s" it (getenv it)))
+                         (s-join "\n")
+                         insert)
+                    (goto-char (point-min))
+                    (align-regexp (point-min) (point-max) "\\(:\\)" 1 0)
+                    (buffer-string)))
+    (message msg)))
 
 (defun shell-pack/load-environment-within-emacs ()
   "Reload the environment variables from the shell env."
