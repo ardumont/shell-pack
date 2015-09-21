@@ -87,6 +87,8 @@
 
 (add-hook 'term-mode-hook 'shell-pack-ash-term-hooks)
 
+(add-to-list 'auto-mode-alist '("[Mm]akefile.*" . makefile-gmake-mode))
+
 ;; Create a global shell pack mode
 
 (defvar shell-pack-mode-map
