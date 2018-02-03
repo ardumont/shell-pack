@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package smartscan)
-(use-package exec-path-from-shell)
 (use-package term)
 (use-package shell)
 (use-package popwin)
@@ -25,12 +24,6 @@
     "http_proxy" "https_proxy" "ftp_proxy" "rsync_proxy" "no_proxy")
   "The variables that are worth maintaining alive in Emacs session.")
 
-;; setup the path
-(use-package exec-path-from-shell
-  :config
-  (dolist (var shell-pack--variables-to-forward-to-emacs)
-    (add-to-list 'exec-path-from-shell-variables var)))
-
 (defun shell-pack-run-shell (&rest cmd)
   "A simpler command CMD to run-shell-command with multiple params."
   (shell-command-to-string (apply #'concatenate 'string cmd)))
@@ -47,11 +40,6 @@
                     (align-regexp (point-min) (point-max) "\\(:\\)" 1 0)
                     (buffer-string)))
     (message msg)))
-
-(defun shell-pack-load-environment-within-emacs ()
-  "Reload the environment variables from the shell env."
-  (interactive)
-  (exec-path-from-shell-initialize))
 
 ;; Extend shell-mode with some bindings
 
@@ -93,7 +81,6 @@
 
 (defvar shell-pack-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c s l") 'shell-pack-load-environment-within-emacs)
     (define-key map (kbd "C-c s d") 'shell-pack-show-env)
     map)
   "Keymap for Shell-pack mode.")
@@ -115,7 +102,6 @@
 
 (global-prettify-symbols-mode 1)
 
-(shell-pack-load-environment-within-emacs)
 
 (provide 'shell-pack)
 ;;; shell-pack.el ends here
