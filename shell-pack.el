@@ -4,10 +4,10 @@
 
 ;;; Code:
 
-(use-package smartscan)
-(use-package term)
-(use-package shell)
-(use-package popwin)
+(require 'smartscan)
+(require 'term)
+(require 'shell)
+(require 'popwin)
 
 (defun shell-pack-log (&rest args)
   "Log the message ARGS in the mini-buffer."
