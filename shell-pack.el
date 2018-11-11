@@ -4,8 +4,11 @@
 
 ;;; Code:
 
+;; internal libs
 (require 'term)
 (require 'shell)
+
+;; external libs
 (require 'popwin)
 
 (defun shell-pack-log (&rest args)
