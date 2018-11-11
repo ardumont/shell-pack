@@ -4,7 +4,6 @@
 
 ;;; Code:
 
-(require 'smartscan)
 (require 'term)
 (require 'shell)
 (require 'popwin)
@@ -51,7 +50,7 @@
     (comint-delchar-or-maybe-eof arg)))
 
 (defun shell-pack-mode-and-simple-bindings-fn ()
-  "Simple binding definition and add smartscan mode."
+  "Simple binding definition."
   (local-set-key (kbd "C-c C-j") 'term-line-mode))
 
 
